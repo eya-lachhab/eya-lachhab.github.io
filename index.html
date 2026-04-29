@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eya Lachhab — DevOps & Automation Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #090c10;
+      --bg2: #0e1218;
+      --bg3: #141820;
+      --border: rgba(255,255,255,0.07);
+      --accent: #00e5a0;
+      --accent2: #0099ff;
+      --text: #e8ecf0;
+      --muted: #6b7585;
+      --card: #111620;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,160,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,160,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 4rem;
+      background: rgba(9,12,16,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 4rem;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,160,0.12) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-glow2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,153,255,0.08) 0%, transparent 70%);
+      bottom: 0; left: 200px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 .name-accent { color: var(--accent); }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: #090c10;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,229,160,0.3);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 3rem;
+      left: 4rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 3rem;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+    }
+
+    /* ── SECTION COMMON ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 4rem;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 3rem;
+      line-height: 1.1;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-text p strong { color: var(--text); }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--accent);
+    }
+
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--bg); }
+
+    .timeline {
+      position: relative;
+      max-width: 900px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.4rem;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 3rem;
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -5px;
+      top: 0.4rem;
+      width: 11px; height: 11px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(0,229,160,0.6);
+    }
+
+    .timeline-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .timeline-company {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+
+    .timeline-period {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .timeline-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .timeline-bullets li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .timeline-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.7rem;
+      top: 0.15rem;
+    }
+
+    .timeline-bullets li strong { color: var(--text); }
+
+    /* ── PROJECTS ── */
+    #projects {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,229,160,0.05) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(0,229,160,0.3);
+      transform: translateY(-4px);
+    }
+
+    .project-card:hover::after { opacity: 1; }
+
+    .project-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .project-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: gap 0.2s;
+    }
+
+    .project-link:hover { gap: 0.7rem; }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+    }
+
+    .skill-group-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pill {
+      font-size: 0.8rem;
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.75rem;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .pill:hover {
+      background: rgba(0,229,160,0.08);
+      border-color: rgba(0,229,160,0.3);
+      color: var(--accent);
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-inner {
+      max-width: 700px;
+    }
+
+    .contact-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.2rem 1.5rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .contact-item:hover {
+      border-color: rgba(0,229,160,0.3);
+      transform: translateX(6px);
+    }
+
+    .contact-item-icon {
+      font-size: 1.1rem;
+      width: 2rem;
+      text-align: center;
+    }
+
+    .contact-item-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    .contact-item-value {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .contact-item-arrow {
+      margin-left: auto;
+      color: var(--accent);
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .contact-item:hover .contact-item-arrow { opacity: 1; }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content > * {
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero-tag        { animation-delay: 0.1s; }
+    h1               { animation-delay: 0.25s; }
+    .hero-desc       { animation-delay: 0.4s; }
+    .hero-ctas       { animation-delay: 0.55s; }
+    .hero-scroll     { animation-delay: 0.7s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      section { padding: 4rem 1.5rem; }
+      #hero { padding: 0 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-scroll { left: 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">eya.lachhab</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-content">
+      <div class="hero-tag">DevOps &amp; Automation Engineer</div>
+      <h1>Eya<br><span class="name-accent">Lachhab</span></h1>
+      <p class="hero-desc">
+        Building fast, reliable CI/CD pipelines and automation frameworks for embedded software.
+        Turning slow validation cycles into streamlined, scalable workflows.
+      </p>
+      <div class="hero-ctas">
+        <a href="#experience" class="btn-primary">View Experience →</a>
+        <a href="#contact" class="btn-secondary">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">Who I Am</div>
+    <div class="section-title">About Me</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a <strong>DevOps & Automation Engineer</strong> based in Ariana, Tunisia, with hands-on experience designing automated CI/CD pipelines, containerized solutions, and test automation frameworks for embedded STM32 software.
+        </p>
+        <p>
+          My work focuses on making validation pipelines <strong>faster, smarter, and more reliable</strong> — from reducing hardware resource waste to cutting CI cycles by 65–70%.
+        </p>
+        <p>
+          I thrive at the intersection of software, QA, and hardware teams, translating complex engineering constraints into clean, maintainable automation.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-num">65%</div>
+          <div class="stat-label">CI Pipeline Acceleration</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">3+</div>
+          <div class="stat-label">Years at STMicroelectronics</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">C1</div>
+          <div class="stat-label">English & French</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">OSS</div>
+          <div class="stat-label">Published on PyPI</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">Career</div>
+    <div class="section-title">Experience</div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-company">ACTIA Engineering Services</span>
+          <span class="timeline-period">July 2025 – Present</span>
+        </div>
+        <div class="timeline-title">DevOps & Automation Engineer</div>
+        <ul class="timeline-bullets">
+          <li>Design and maintain <strong>Jenkins pipelines</strong> for embedded software validation across multiple teams.</li>
+          <li>Automate test execution scripts with <strong>parallelization</strong> to optimize run times.</li>
+          <li>Achieved <strong>65–70% CI pipeline acceleration</strong>, reducing validation cycles and redundancies.</li>
+          <li>Develop solutions to optimize hardware resource utilization in automated test benches.</li>
+          <li>Integrate automation tools into pipelines with up-to-date documentation on <strong>Confluence</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-company">STMicroelectronics</span>
+          <span class="timeline-period">Nov 2023 – June 2025</span>
+        </div>
+        <div class="timeline-title">DevOps Software Engineer</div>
+        <ul class="timeline-bullets">
+          <li>Built an <strong>automatic STM32 board detection</strong> solution for test room servers.</li>
+          <li>Created Jenkins pipelines and Groovy scripts for automated embedded software testing.</li>
+          <li>Developed, containerized, and maintained a <strong>full-stack app</strong> (Vue.js, Python, PostgreSQL) for hardware resource management.</li>
+          <li>Configured Linux servers and deployed <strong>Docker-based Jenkins agents</strong>.</li>
+          <li>Reduced hardware resource usage through optimized allocation and automation scripts.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-company">STMicroelectronics</span>
+          <span class="timeline-period">Feb 2023 – Aug 2023</span>
+        </div>
+        <div class="timeline-title">Software Development Intern (PFE)</div>
+        <ul class="timeline-bullets">
+          <li>Feasibility study and prototype of a <strong>hardware resource management tool</strong>.</li>
+          <li>Set up Jenkins pipeline prototypes and Groovy scripts for STM32 driver validation.</li>
+          <li>Developed Python scripts for embedded software execution automation.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-company">STMicroelectronics</span>
+          <span class="timeline-period">July 2022 – Sep 2022</span>
+        </div>
+        <div class="timeline-title">Software Development Intern (PFA)</div>
+        <ul class="timeline-bullets">
+          <li>Improved QA scripts by filtering false positives and classifying errors by criticality.</li>
+          <li>Automated <strong>test report generation</strong>, reducing unnecessary CI pipeline output.</li>
+          <li>Integrated developments into CI pipelines to improve continuous integration efficiency.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Work</div>
+    <div class="section-title">Projects</div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-icon">📦</div>
+        <div class="project-name">sshrunner</div>
+        <div class="project-desc">
+          An open-source Python package for running commands on remote hosts via SSH. Published on PyPI and available for the community.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SSH</span>
+          <span class="tag">CLI</span>
+          <span class="tag">Open Source</span>
+        </div>
+        <a href="https://pypi.org/project/sshrunner/" target="_blank" class="project-link">PyPI →</a>
+        &nbsp;&nbsp;
+        <a href="https://github.com/eya-lachhab/sshrunner" target="_blank" class="project-link">GitHub →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🪑</div>
+        <div class="project-name">office-chair-drift</div>
+        <div class="project-desc">
+          A fun side project — because sometimes engineers need to take a break from pipelines and just drift.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Side Project</span>
+          <span class="tag">Fun</span>
+        </div>
+        <a href="https://github.com/eya-lachhab/office-chair-drift" target="_blank" class="project-link">GitHub →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">✍️</div>
+        <div class="project-name">Technical Writing</div>
+        <div class="project-desc">
+          Published an article on lesser-known Unix commands that every developer should know — shared on dev.to.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Unix</span>
+          <span class="tag">Linux</span>
+          <span class="tag">DevOps</span>
+          <span class="tag">Writing</span>
+        </div>
+        <a href="https://dev.to/eyalachhab/unix-commands-that-feel-like-cheating-and-why-most-devs-have-never-heard-of-them-3o80" target="_blank" class="project-link">Read Article →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">Stack</div>
+    <div class="section-title">Technical Skills</div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">CI/CD & Automation</div>
+        <div class="skill-pills">
+          <span class="pill">Jenkins</span>
+          <span class="pill">Groovy</span>
+          <span class="pill">Robot Framework</span>
+          <span class="pill">Bash</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Containers & DevOps</div>
+        <div class="skill-pills">
+          <span class="pill">Docker</span>
+          <span class="pill">Portainer</span>
+          <span class="pill">Linux</span>
+          <span class="pill">JFrog Artifactory</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Scripting & Dev</div>
+        <div class="skill-pills">
+          <span class="pill">Python</span>
+          <span class="pill">JavaScript</span>
+          <span class="pill">Flask</span>
+          <span class="pill">FastAPI</span>
+          <span class="pill">Express.js</span>
+          <span class="pill">Vue.js</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Data & Collaboration</div>
+        <div class="skill-pills">
+          <span class="pill">PostgreSQL</span>
+          <span class="pill">MySQL</span>
+          <span class="pill">Git</span>
+          <span class="pill">GitHub</span>
+          <span class="pill">GitLab</span>
+          <span class="pill">Jira</span>
+          <span class="pill">Confluence</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Let's Talk</div>
+    <div class="section-title">Get in Touch</div>
+    <div class="contact-inner">
+      <p class="contact-desc">
+        Open to new opportunities, collaborations, or just a conversation about DevOps and automation. Feel free to reach out through any of the channels below.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:eya.lachhab@outlook.com" class="contact-item">
+          <span class="contact-item-icon">✉️</span>
+          <div>
+            <span class="contact-item-label">Email</span>
+            <span class="contact-item-value">eya.lachhab@outlook.com</span>
+          </div>
+          <span class="contact-item-arrow">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/eya-lachhab" target="_blank" class="contact-item">
+          <span class="contact-item-icon">💼</span>
+          <div>
+            <span class="contact-item-label">LinkedIn</span>
+            <span class="contact-item-value">linkedin.com/in/eya-lachhab</span>
+          </div>
+          <span class="contact-item-arrow">→</span>
+        </a>
+        <a href="https://github.com/eya-lachhab" target="_blank" class="contact-item">
+          <span class="contact-item-icon">🐙</span>
+          <div>
+            <span class="contact-item-label">GitHub</span>
+            <span class="contact-item-value">github.com/eya-lachhab</span>
+          </div>
+          <span class="contact-item-arrow">→</span>
+        </a>
+        <a href="https://dev.to/eyalachhab" target="_blank" class="contact-item">
+          <span class="contact-item-icon">📝</span>
+          <div>
+            <span class="contact-item-label">dev.to</span>
+            <span class="contact-item-value">dev.to/eyalachhab</span>
+          </div>
+          <span class="contact-item-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Eya Lachhab</p>
+    <p>Built with GitHub Pages</p>
+  </footer>
+
+  <script>
+    // Scroll reveal for timeline items
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 120);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--accent)' : '';
+      });
+    });
+  </script>
+
+</body>
+</html>
